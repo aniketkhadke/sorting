@@ -1,0 +1,72 @@
+package com.aniket.sort;
+
+/*
+ * The selection sort algorithm sorts an array by repeatedly finding the minimum element (considering ascending order) 
+ * from unsorted part and putting it at the beginning. The algorithm maintains two subarrays in a given array.
+	1) The subarray which is already sorted.
+	2) Remaining subarray which is unsorted.
+ * In every iteration of selection sort, the minimum element (considering ascending order) from the unsorted subarray 
+ * is picked and moved to the sorted subarray.
+ * Complexity: O(n*n) 
+ * By default, selection sort is not stable 
+ * */
+public class SelectionSort {
+
+	public static void main(String[] args) {
+		int[] arr = { 1000, 888, 800, 115, 600 };
+		System.out.print("Input Array: ");
+		printArray(arr);
+		new SelectionSort().sort(arr);
+		new SelectionSort().stableSelectionSort(arr);
+		System.out.print("Sorted Array: ");
+		printArray(arr);
+
+	}
+
+	private void sort(int[] arr) {
+		for (int i = 0; i < arr.length - 1; i++) {
+			int smallestIndex = i;
+			for (int j = i + 1; j < arr.length; j++) {
+				if (arr[smallestIndex] > arr[j]) {
+					smallestIndex = j;
+				}
+			}
+			if (smallestIndex != i) {
+				int temp = arr[smallestIndex];
+				arr[smallestIndex] = arr[i];
+				arr[i] = temp;
+			}
+		}
+	}
+
+	/**
+	 * @param arr
+	 * Stable selction sort means the sorting algorithm will change order when two elements are same.
+	 * For example, 10, 20(a), 90, 20(b), 15 will be sorted as - 10, 15, 20(a), 20(b), 90  
+	 */
+	private void stableSelectionSort(int[] arr) {
+		for (int i = 0; i < arr.length - 1; i++) {
+			int smallestIndex = i;
+			for (int j = i + 1; j < arr.length; j++) {
+				if (arr[smallestIndex] > arr[j]) {
+					smallestIndex = j;
+				}
+			}
+			int key = arr[smallestIndex];
+			while (smallestIndex > i) {
+				arr[smallestIndex] = arr[smallestIndex - 1];
+				smallestIndex--;
+			}
+			arr[i] = key;
+		}
+
+	}
+
+	private static void printArray(int[] arr) {
+		for (int i : arr) {
+			System.out.print("\t" + i);
+		}
+		System.out.println("");
+	}
+
+}
